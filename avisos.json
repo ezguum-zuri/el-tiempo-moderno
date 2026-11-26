@@ -1,6 +1,6 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-26T17:33:26+00:00",
+"updated": "2026-11-26T18:29:50+00:00",
 "warnings": [
 {
 "level": 2,
@@ -33,6 +33,62 @@
 "desc": "Temperatura mínima: -6 ºC. Estos valores se esperan en el norte de la zona.",
 "onset": "2026-11-27T00:00:00+01:00",
 "expires": "2026-11-27T08:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Vegas del Guadiana",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-27T23:00:00+01:00",
+"expires": "2026-11-27T23:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Valle del Guadiana",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-27T23:00:00+01:00",
+"expires": "2026-11-27T23:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "La Siberia extremeña",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-27T23:00:00+01:00",
+"expires": "2026-11-27T23:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Vegas del Guadiana",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-28T00:00:00+01:00",
+"expires": "2026-11-28T08:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Valle del Guadiana",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-28T00:00:00+01:00",
+"expires": "2026-11-28T08:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "La Siberia extremeña",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-28T00:00:00+01:00",
+"expires": "2026-11-28T08:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de lluvias de nivel amarillo",
+"zone": "Este de La Palma",
+"desc": "Precipitación acumulada en una hora: 15 mm.",
+"onset": "2026-11-28T00:00:00-00:00",
+"expires": "2026-11-28T14:59:59-00:00"
 }
 ]
 }
