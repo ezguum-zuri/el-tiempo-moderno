@@ -1,15 +1,7 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-26T16:27:11+00:00",
+"updated": "2026-11-26T17:33:26+00:00",
 "warnings": [
-{
-"level": 2,
-"title": "Aviso de nevadas de nivel amarillo",
-"zone": "Valle de Arán",
-"desc": "Acumulación de nieve en 24 horas: 5 cm. En el Pirineo, el aviso se refiere principalmente a la divisoria. Cota de nieve a 1100-1300 m. Estas cantidades se acumularán por encima de los 1300-1400 m.",
-"onset": "2026-11-26T08:00:00+01:00",
-"expires": "2026-11-26T17:59:59+01:00"
-},
 {
 "level": 2,
 "title": "Aviso de costeros de nivel amarillo",
