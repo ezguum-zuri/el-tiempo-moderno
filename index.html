@@ -444,9 +444,22 @@ function renderAlerts(){
 /* ---------- avisos oficiales (AEMET vía MeteoAlarm) ---------- */
 function provKeys(p){return String(p.prov||'').split('+').filter(Boolean).flatMap(k=>PROV[k]||[k])}
 let FEED=null,FEEDT=0;
+/* MeteoAlarm no deja que el navegador lea sus avisos (CORS). Una tarea de GitHub Actions
+   los descarga cada 20 min y los guarda en avisos.json, en este mismo repositorio. */
+const AV_URLS=['https://raw.githubusercontent.com/ezguum-zuri/el-tiempo-moderno/main/avisos.json','avisos.json'];
+async function feedRepo(){
+  for(const u of AV_URLS){
+    try{const j=await fetchT(u+'?t='+Math.floor(Date.now()/3e5),9000);
+      if(!j||!Array.isArray(j.warnings)||Date.now()-new Date(j.updated)>6*3600e3)continue;
+      const now=new Date();
+      return j.warnings.map(w=>({level:+w.level||0,title:String(w.title||'Aviso'),zone:String(w.zone||''),z:nrm(w.zone),desc:String(w.desc||''),onset:new Date(w.onset),expires:new Date(w.expires)})).filter(w=>w.level>=2&&w.expires>now)}catch(e){}
+  }
+  return null;
+}
 async function feed(){
   if(FEED&&Date.now()-FEEDT<6e5)return FEED;
-  const j=await fetchT('https://feeds.meteoalarm.org/api/v1/warnings/feeds-spain',9000),now=new Date(),all=[];
+  const r=await feedRepo();if(r){FEED=r;FEEDT=Date.now();return r}
+  const j=await fetchT('https://feeds.meteoalarm.org/api/v1/warnings/feeds-spain',20000),now=new Date(),all=[];
   for(const w of j.warnings||[]){const a=w.alert||{};if(a.msgType==='Cancel')continue;
     const info=(a.info||[]).find(i=>/^es/i.test(i.language||''))||(a.info||[])[0];if(!info)continue;
     const lv=parseInt(((info.parameter||[]).find(q=>q.valueName==='awareness_level')||{}).value)||0;if(lv<2)continue;
