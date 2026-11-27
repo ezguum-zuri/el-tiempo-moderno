@@ -1,15 +1,7 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-27T10:02:05+00:00",
+"updated": "2026-11-27T11:14:01+00:00",
 "warnings": [
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Valle del Guadiana",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-27T23:00:00+01:00",
-"expires": "2026-11-27T23:59:59+01:00"
-},
 {
 "level": 2,
 "title": "Aviso de nieblas de nivel amarillo",
@@ -31,8 +23,8 @@
 "title": "Aviso de nieblas de nivel amarillo",
 "zone": "Valle del Guadiana",
 "desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T08:59:59+01:00"
+"onset": "2026-11-27T23:00:00+01:00",
+"expires": "2026-11-28T11:59:59+01:00"
 },
 {
 "level": 2,
@@ -41,6 +33,22 @@
 "desc": "Precipitación acumulada en una hora: 15 mm.",
 "onset": "2026-11-28T00:00:00-00:00",
 "expires": "2026-11-28T14:59:59-00:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Vegas del Guadiana",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-29T00:00:00+01:00",
+"expires": "2026-11-29T11:59:59+01:00"
+},
+{
+"level": 2,
+"title": "Aviso de nieblas de nivel amarillo",
+"zone": "Tajo y Alagón",
+"desc": "Visibilidad: 200 m.",
+"onset": "2026-11-29T00:00:00+01:00",
+"expires": "2026-11-29T11:59:59+01:00"
 }
 ]
 }
