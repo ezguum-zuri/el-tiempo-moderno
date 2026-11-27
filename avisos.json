@@ -1,23 +1,7 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-27T07:18:34+00:00",
+"updated": "2026-11-27T08:42:48+00:00",
 "warnings": [
-{
-"level": 2,
-"title": "Aviso de temperaturas mínimas de nivel amarillo",
-"zone": "Valle de Arán",
-"desc": "Temperatura mínima: -6 ºC.",
-"onset": "2026-11-27T00:00:00+01:00",
-"expires": "2026-11-27T08:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de temperaturas mínimas de nivel amarillo",
-"zone": "Pirineo oscense",
-"desc": "Temperatura mínima: -6 ºC. Estos valores se esperan en el norte de la zona.",
-"onset": "2026-11-27T00:00:00+01:00",
-"expires": "2026-11-27T08:59:59+01:00"
-},
 {
 "level": 2,
 "title": "Aviso de nieblas de nivel amarillo",
