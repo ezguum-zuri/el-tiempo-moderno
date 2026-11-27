@@ -1,6 +1,6 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-27T04:47:15+00:00",
+"updated": "2026-11-27T05:58:58+00:00",
 "warnings": [
 {
 "level": 2,
@@ -9,14 +9,6 @@
 "desc": "Viento del norte y noroeste de 50 km/h (fuerza 7) y olas de 2 a 3 m.",
 "onset": "2026-11-26T11:00:00+01:00",
 "expires": "2026-11-27T07:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de costeros de nivel amarillo",
-"zone": "Costa - Litoral sur de Tarragona",
-"desc": "Viento del noroeste de 50 a 61 km/h (fuerza 7).",
-"onset": "2026-11-26T11:00:00+01:00",
-"expires": "2026-11-27T05:59:59+01:00"
 },
 {
 "level": 2,
