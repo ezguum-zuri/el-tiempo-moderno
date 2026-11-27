@@ -1,15 +1,7 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-27T05:58:58+00:00",
+"updated": "2026-11-27T07:18:34+00:00",
 "warnings": [
-{
-"level": 2,
-"title": "Aviso de costeros de nivel amarillo",
-"zone": "Costa - Ampurdán",
-"desc": "Viento del norte y noroeste de 50 km/h (fuerza 7) y olas de 2 a 3 m.",
-"onset": "2026-11-26T11:00:00+01:00",
-"expires": "2026-11-27T07:59:59+01:00"
-},
 {
 "level": 2,
 "title": "Aviso de temperaturas mínimas de nivel amarillo",
