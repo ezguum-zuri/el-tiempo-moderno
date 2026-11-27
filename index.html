@@ -26,13 +26,13 @@ body,body[data-skin=arcilla]{--bg:#ebe8e2;--card:#f8f6f2;--ink:#151515;--mute:#6
 body[data-skin=noche]{--bg:#0f1013;--card:#1a1b20;--ink:#f1f0ec;--mute:#9b998f;--line:#2e2f35;--acc:#ffb23e;--sun:#ffc83d;--roof:#a8463a;--c1:#f4f4f6;--c2:#8d909a;--top:#3d5c47;--side:#3b3129;--rock1:#3a3632;--rock2:#121110;--drop:#5cc2ff;--warn:#ffb23e;--leaf:#2f6b45;--house:#e9e4d8;--moon:#f3efe4;color-scheme:dark}
 body[data-skin=verbena]{--bg:#f1e6d6;--card:#fbf4ea;--ink:#1d2457;--mute:#6a6987;--line:#e2d4bf;--acc:#f59a23;--sun:#ffc21a;--roof:#e0503f;--c1:#8fb2f5;--c2:#2d5ad0;--top:#9fcb6c;--side:#c27a4a;--rock1:#8a4b2d;--rock2:#4a2214;--drop:#2d5ad0;--warn:#ff5d73;--leaf:#4f9a52;--house:#fffaf2;--moon:#fff3d6;color-scheme:light}
 .wrap{max-width:1240px;margin:0 auto;padding:clamp(14px,3vw,36px) max(4vw,14px) 48px}
-header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:center;margin-bottom:18px}
-.hname{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.hbtns{display:flex;flex-direction:column;gap:8px;align-items:stretch}
-.hbtns .btn{justify-content:flex-start}
-.place{all:unset;cursor:pointer;font:800 clamp(28px,7.6vw,48px)/1.05 Archivo,sans-serif;display:flex;align-items:center;gap:8px;max-width:100%;border-radius:12px;padding:4px 6px;margin-left:-6px}
+header{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:18px;max-width:640px;margin-inline:auto}
+.hname{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.hbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hbtns .btn{justify-content:center}
+.place{all:unset;cursor:pointer;font:800 clamp(38px,11vw,60px)/1.05 Archivo,sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;max-width:100%;margin:0 auto;border-radius:12px;padding:4px 6px}
 .place:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.place svg{width:.72em;height:.72em;opacity:.6;flex:none}
+.place svg{width:.62em;height:.62em;opacity:.6;flex:none}
 #placeName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .mini{all:unset;box-sizing:border-box;position:fixed;z-index:50;left:50%;top:0;width:min(680px,calc(100% - 16px));margin-top:max(8px,env(safe-area-inset-top));
   transform:translate(-50%,-140%);display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:6px 14px;padding:12px 20px 12px 14px;border-radius:28px;cursor:pointer;
@@ -307,7 +307,7 @@ footer a{color:inherit}
 <script>
 {
 /* ---------- actualización automática: si hay versión nueva en GitHub, recarga sin caché ---------- */
-const APP_V='2026-11-27e';
+const APP_V='2026-11-27f';
 async function checkUpdate(){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
   if(j.v&&j.v!==APP_V){const k='w.upd.'+j.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+encodeURIComponent(j.v)+location.hash)}}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
