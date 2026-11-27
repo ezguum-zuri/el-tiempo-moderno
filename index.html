@@ -61,7 +61,10 @@ header{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:1
 .sh-top h2{font:800 clamp(32px,7vw,44px)/1.05 Archivo,sans-serif;margin:0}
 .sh-btns{display:flex;gap:8px}
 .sh-h3{font:800 20px Archivo,sans-serif;margin:28px 0 10px}
-.addf{display:flex;gap:8px}
+.addf{display:flex;gap:8px;flex-wrap:wrap}
+.addf input#addQ{flex:1 1 200px}
+.panel .altin,.addf .altin{flex:1 1 100%;font-size:16px}
+.altin{flex:1 1 100%;font:16px Archivo,sans-serif;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
 .addf input{flex:1;font:18px Archivo,sans-serif;min-height:48px;padding:0 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
 .cards{display:grid;gap:14px;margin-top:16px}
 .pc{position:relative}
@@ -238,7 +241,7 @@ footer a{color:inherit}
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shTitle">
   <div class="sh-in">
     <div class="sh-top"><h2 id="shTitle">Mis lugares</h2><div class="sh-btns"><button class="btn" id="editBtn" aria-pressed="false">Editar</button><button class="btn" id="closeSheet">Listo</button></div></div>
-    <form id="addForm" class="addf"><input id="addQ" type="search" placeholder="Añadir un lugar…" autocomplete="off" aria-label="Añadir lugar"><button class="btn" type="submit">Buscar</button></form>
+    <form id="addForm" class="addf"><input id="addQ" type="search" placeholder="Pueblo, ciudad o monte…" autocomplete="off" aria-label="Añadir lugar"><button class="btn" type="submit">Buscar</button><input id="addAlt" class="altin" type="number" inputmode="numeric" placeholder="Altitud (m), opcional" aria-label="Altitud en metros, opcional"></form>
     <div class="chips" id="addRes"></div><p class="msg" id="addMsg"></p>
     <div class="cards" id="cards"></div>
     <h3 class="sh-h3">Montes</h3>
@@ -264,9 +267,10 @@ footer a{color:inherit}
 
   <div class="panel" id="panel" hidden>
     <form id="searchForm">
-      <input id="q" type="search" placeholder="Busca un pueblo o ciudad…" autocomplete="off" aria-label="Buscar lugar">
+      <input id="q" type="search" placeholder="Pueblo, ciudad o monte…" autocomplete="off" aria-label="Buscar lugar">
       <button class="btn" type="submit">Buscar</button>
       <button class="btn" type="button" id="geoBtn">Mi ubicación</button>
+      <input id="qAlt" class="altin" type="number" inputmode="numeric" placeholder="Altitud (m), opcional" aria-label="Altitud en metros, opcional">
     </form>
     <div class="chips" id="results"></div>
     <p class="msg" id="searchMsg"></p>
@@ -335,7 +339,7 @@ footer a{color:inherit}
 <script>
 {
 /* ---------- actualización automática: si hay versión nueva en GitHub, recarga sin caché ---------- */
-const APP_V='2026-11-27g';
+const APP_V='2026-11-27h';
 async function checkUpdate(){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
   if(j.v&&j.v!==APP_V){const k='w.upd.'+j.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+encodeURIComponent(j.v)+location.hash)}}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
@@ -733,10 +737,25 @@ function chips(list){$('results').innerHTML=list.map((p,j)=>`<button class="btn"
 chips(PRESETS);
 $('results').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;go($('results')._list[+b.dataset.j])});
 $('searchForm').addEventListener('submit',async e=>{e.preventDefault();const q=$('q').value.trim();if(!q)return;$('searchMsg').textContent='Buscando…';
-  try{const j=await fetchT(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=es`,6000);
-    const l=(j.results||[]).map(r=>({name:r.name,sub:[r.admin2||r.admin1,r.country].filter(Boolean).join(', '),lat:r.latitude,lon:r.longitude,alt:/^(MT|PK|HLL)/.test(r.feature_code||'')&&r.elevation?Math.round(r.elevation):null,cc:r.country_code,prov:r.country_code==='ES'?provOf(r.admin2||r.admin1):null}));
+  try{const l=withAlt(await searchPlaces(q),$('qAlt').value);
     chips(l.length?l:PRESETS);$('searchMsg').textContent=l.length?'':'No he encontrado ese lugar.'}
   catch(err){$('searchMsg').textContent='La búsqueda necesita conexión con Open‑Meteo (funciona al publicarla en GitHub Pages). Usa los lugares de arriba.';chips(PRESETS)}});
+/* ---------- buscador: pueblos y ciudades (Open-Meteo) + montes y cumbres de cualquier país (OpenStreetMap) ---------- */
+function withAlt(l,v){const a=parseInt(v,10);return isNaN(a)?l:l.map(p=>({...p,alt:a}))}
+async function searchPlaces(q){
+  const n=nrm(q),local=MONTES.flatMap(([g,l])=>l).filter(m=>nrm(m.name).includes(n)).map(m=>({...m,sub:'monte'}));
+  const [om,osm]=await Promise.allSettled([
+    fetchT(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=es`,6000),
+    fetchT(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2&limit=10&extratags=1&addressdetails=1&accept-language=es`,7000)]);
+  if(om.status!=='fulfilled'&&osm.status!=='fulfilled'&&!local.length)throw new Error('sin conexión');
+  const peaks=osm.status==='fulfilled'&&Array.isArray(osm.value)?osm.value.filter(r=>r.category==='natural'&&/^(peak|volcano|hill|ridge|saddle|mountain_range)$/.test(r.type)).map(r=>{
+      const a=r.address||{},cc=(a.country_code||'').toUpperCase(),ele=parseFloat(String((r.extratags||{}).ele||'').replace(',','.'));
+      return {name:r.name||String(r.display_name).split(',')[0],sub:[isNaN(ele)?'cumbre':Math.round(ele)+' m',a.province||a.county||a.state,a.country].filter(Boolean).join(' · '),lat:+(+r.lat).toFixed(4),lon:+(+r.lon).toFixed(4),alt:isNaN(ele)?null:Math.round(ele),cc,prov:cc==='ES'?provOf(a.province||a.county||a.state):null}}):[];
+  const towns=om.status==='fulfilled'?(om.value.results||[]).map(r=>({name:r.name,sub:[/^(MT|PK|HLL)/.test(r.feature_code||'')&&r.elevation?Math.round(r.elevation)+' m':'',r.admin2||r.admin1,r.country].filter(Boolean).join(' · '),lat:r.latitude,lon:r.longitude,alt:/^(MT|PK|HLL)/.test(r.feature_code||'')&&r.elevation?Math.round(r.elevation):null,cc:r.country_code,prov:r.country_code==='ES'?provOf(r.admin2||r.admin1):null})):[];
+  const out=[],seen=new Set();
+  for(const p of [...local,...peaks,...towns]){const k=(+p.lat).toFixed(2)+','+(+p.lon).toFixed(2);if(seen.has(k))continue;seen.add(k);out.push(p)}
+  return out.slice(0,10);
+}
 /* ---------- mi ubicación ---------- */
 function setLoc(t){$('locMsg').textContent=t||''}
 async function reverse(la,lo){
@@ -816,8 +835,7 @@ $('cards').addEventListener('click',e=>{
 });
 $('addForm').addEventListener('submit',async e=>{e.preventDefault();const q=$('addQ').value.trim();if(!q)return;$('addMsg').textContent='Buscando…';
   const show=l=>{$('addRes').innerHTML=l.map((p,j)=>`<button class="btn" data-j="${j}">＋ ${esc(p.name)}${p.sub?` <span style="opacity:.6">· ${esc(p.sub)}</span>`:''}</button>`).join('');$('addRes')._list=l};
-  try{const j=await fetchT(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=es`,6000);
-    const l=(j.results||[]).map(r=>({name:r.name,sub:[r.admin2||r.admin1,r.country].filter(Boolean).join(', '),lat:r.latitude,lon:r.longitude,alt:/^(MT|PK|HLL)/.test(r.feature_code||'')&&r.elevation?Math.round(r.elevation):null,cc:r.country_code,prov:r.country_code==='ES'?provOf(r.admin2||r.admin1):null}));
+  try{const l=withAlt(await searchPlaces(q),$('addAlt').value);
     show(l);$('addMsg').textContent=l.length?'Toca el que quieras añadir.':'No he encontrado ese lugar.'}
   catch(err){const n=nrm(q),l=PRESETS.filter(p=>nrm(p.name).includes(n));show(l.length?l:PRESETS);$('addMsg').textContent='Sin conexión con el buscador: elige uno de estos (en GitHub Pages podrás buscar cualquier sitio).'}});
 $('addRes').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const p=$('addRes')._list[+b.dataset.j];upsert(p);$('addRes').innerHTML='';$('addQ').value='';$('addMsg').textContent=`${p.name} añadido.`;syncAddHere();renderCards();loadSummaries()});
