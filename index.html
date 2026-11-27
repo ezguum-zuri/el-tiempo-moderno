@@ -30,9 +30,10 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align
 .hname{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .hbtns{display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .hbtns .btn{justify-content:flex-start}
-.place{all:unset;cursor:pointer;font:800 clamp(36px,9.5vw,56px)/1.02 Archivo,sans-serif;display:flex;align-items:center;gap:10px;overflow-wrap:anywhere;text-wrap:balance;border-radius:12px;padding:4px 6px;margin-left:-6px}
+.place{all:unset;cursor:pointer;font:800 clamp(28px,7.6vw,48px)/1.05 Archivo,sans-serif;display:flex;align-items:center;gap:8px;max-width:100%;border-radius:12px;padding:4px 6px;margin-left:-6px}
 .place:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.place svg{width:28px;height:28px;opacity:.6;flex:none}
+.place svg{width:.72em;height:.72em;opacity:.6;flex:none}
+#placeName{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .mini{all:unset;box-sizing:border-box;position:fixed;z-index:50;left:50%;top:0;width:min(680px,calc(100% - 16px));margin-top:max(8px,env(safe-area-inset-top));
   transform:translate(-50%,-140%);display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:6px 14px;padding:12px 20px 12px 14px;border-radius:28px;cursor:pointer;
   background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
@@ -306,7 +307,7 @@ footer a{color:inherit}
 <script>
 {
 /* ---------- actualización automática: si hay versión nueva en GitHub, recarga sin caché ---------- */
-const APP_V='2026-11-27d';
+const APP_V='2026-11-27e';
 async function checkUpdate(){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
   if(j.v&&j.v!==APP_V){const k='w.upd.'+j.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+encodeURIComponent(j.v)+location.hash)}}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
@@ -687,6 +688,8 @@ function locate(quiet){
     catch(e){if(!quiet)setLoc('No se ha podido obtener tu ubicación aquí. En la página publicada en GitHub Pages sí funciona.');res(false)}});
 }
 $('locBtn').addEventListener('click',()=>locate(false));
+function fitName(){const b=$('placeBtn'),n=$('placeName');b.style.fontSize='';let f=parseFloat(getComputedStyle(b).fontSize);while(n.scrollWidth>n.clientWidth+1&&f>20){f-=1;b.style.fontSize=f+'px'}}
+window.addEventListener('resize',fitName);
 /* ---------- mis lugares ---------- */
 const keyOf=p=>p.geo?'geo':(+p.lat).toFixed(2)+','+(+p.lon).toFixed(2);
 let PLACES=[];try{PLACES=store.get('w.places')}catch(e){}if(!Array.isArray(PLACES)||!PLACES.length)PLACES=[{name:place.name,lat:place.lat,lon:place.lon,prov:place.prov||null,cc:place.cc||null,geo:!!place.geo}];
@@ -744,7 +747,7 @@ $('addRes').addEventListener('click',e=>{const b=e.target.closest('button');if(!
 $('miAl').addEventListener('click',e=>{e.stopPropagation();(OFF.list.length?$('avisos'):document.querySelector('.hero')).scrollIntoView({behavior:'smooth',block:'start'})});
 mini.addEventListener('click',()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
 $('geoBtn').addEventListener('click',()=>{$('panel').hidden=true;$('placeBtn').setAttribute('aria-expanded','false');locate(false)});
-async function go(p){place={name:p.name,lat:p.lat,lon:p.lon,prov:p.prov||null,cc:p.cc||null,geo:!!p.geo};store.set('w.place',place);$('placeName').textContent=place.name;$('locBtn').setAttribute('aria-pressed',place.geo);if(place.geo)upsert(place,true);syncAddHere();$('panel').hidden=true;$('placeBtn').setAttribute('aria-expanded','false');$('searchMsg').textContent='';taps=0;
+async function go(p){place={name:p.name,lat:p.lat,lon:p.lon,prov:p.prov||null,cc:p.cc||null,geo:!!p.geo};store.set('w.place',place);$('placeName').textContent=place.name;fitName();$('locBtn').setAttribute('aria-pressed',place.geo);if(place.geo)upsert(place,true);syncAddHere();$('panel').hidden=true;$('placeBtn').setAttribute('aria-expanded','false');$('searchMsg').textContent='';taps=0;
   OFF={status:'loading',list:[]};await load(place);idx=-1;renderAll();await Promise.all([loadOfficial(place),loadCompare(place)]);renderAlerts();renderOfficial();renderModels()}
 $('modelSel').addEventListener('change',async e=>{model=e.target.value;store.set('w.model',model);$('verdict').textContent='Cargando…';const keep=idx-start;await load(place);setRange();idx=Math.min(start+keep,start+ +$('scrub').max);$('scrub').value=idx-start;renderHero();renderAlerts();renderRows();drawChart();renderWeek();renderTiles();renderModels()});
 $('cmp').addEventListener('click',e=>{const r=e.target.closest('tr[data-m]');if(!r)return;$('modelSel').value=r.dataset.m;$('modelSel').dispatchEvent(new Event('change'))});
