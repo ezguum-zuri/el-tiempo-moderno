@@ -26,10 +26,13 @@ body,body[data-skin=arcilla]{--bg:#ebe8e2;--card:#f8f6f2;--ink:#151515;--mute:#6
 body[data-skin=noche]{--bg:#0f1013;--card:#1a1b20;--ink:#f1f0ec;--mute:#9b998f;--line:#2e2f35;--acc:#ffb23e;--sun:#ffc83d;--roof:#a8463a;--c1:#f4f4f6;--c2:#8d909a;--top:#3d5c47;--side:#3b3129;--rock1:#3a3632;--rock2:#121110;--drop:#5cc2ff;--warn:#ffb23e;--leaf:#2f6b45;--house:#e9e4d8;--moon:#f3efe4;color-scheme:dark}
 body[data-skin=verbena]{--bg:#f1e6d6;--card:#fbf4ea;--ink:#1d2457;--mute:#6a6987;--line:#e2d4bf;--acc:#f59a23;--sun:#ffc21a;--roof:#e0503f;--c1:#8fb2f5;--c2:#2d5ad0;--top:#9fcb6c;--side:#c27a4a;--rock1:#8a4b2d;--rock2:#4a2214;--drop:#2d5ad0;--warn:#ff5d73;--leaf:#4f9a52;--house:#fffaf2;--moon:#fff3d6;color-scheme:light}
 .wrap{max-width:1240px;margin:0 auto;padding:clamp(14px,3vw,36px) max(4vw,14px) 48px}
-header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
-.place{all:unset;cursor:pointer;font:800 clamp(28px,5vw,44px)/1.05 Archivo,sans-serif;display:flex;align-items:center;gap:10px;border-radius:12px;padding:4px 6px;margin-left:-6px}
+header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:center;margin-bottom:18px}
+.hname{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.hbtns{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.hbtns .btn{justify-content:flex-start}
+.place{all:unset;cursor:pointer;font:800 clamp(36px,9.5vw,56px)/1.02 Archivo,sans-serif;display:flex;align-items:center;gap:10px;overflow-wrap:anywhere;text-wrap:balance;border-radius:12px;padding:4px 6px;margin-left:-6px}
 .place:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.place svg{width:22px;height:22px;opacity:.6}
+.place svg{width:28px;height:28px;opacity:.6;flex:none}
 .mini{all:unset;box-sizing:border-box;position:fixed;z-index:50;left:50%;top:0;width:min(680px,calc(100% - 16px));margin-top:max(8px,env(safe-area-inset-top));
   transform:translate(-50%,-140%);display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:6px 14px;padding:12px 20px 12px 14px;border-radius:28px;cursor:pointer;
   background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
@@ -78,8 +81,8 @@ header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:s
 .pc-ed button.del{background:#e0281e;color:#fff}
 .pc-ed button:focus-visible{outline:3px solid var(--acc)}
 .addhere{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.locbtn,.locbtn2{display:inline-flex;align-items:center;gap:8px}.locbtn2{margin-right:auto}
-.locmsg{flex-basis:100%;order:9;margin:0;color:var(--mute);font-size:16px}.locmsg:empty{display:none}
+.locbtn,.locbtn2{display:inline-flex;align-items:center;gap:8px}
+.locmsg{grid-column:1/-1;margin:0;color:var(--mute);font-size:16px}.locmsg:empty{display:none}
 .skins{display:flex;gap:6px;flex-wrap:wrap}
 .btn{font:600 16px Archivo,sans-serif;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .btn[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -91,11 +94,11 @@ header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:s
 .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px}
 .card{background:var(--card);border-radius:32px;padding:clamp(18px,2.4vw,28px);position:relative;overflow:hidden}
 .hero{display:flex;flex-direction:column}
-.htop{display:flex;justify-content:space-between;gap:14px;align-items:flex-end}
+.htop{display:flex;gap:14px;align-items:center}
 .temp{font:400 clamp(92px,16vw,156px)/.9 Anton,Impact,sans-serif;letter-spacing:-.01em}
 .temp sup{font-size:.4em;vertical-align:.95em;margin-left:2px}
-.cond{text-align:right;max-width:58%;padding-bottom:12px}
-.cond b{display:block;font:400 clamp(28px,3.8vw,38px)/1.05 Anton,Impact,sans-serif;text-transform:uppercase;text-wrap:balance}
+.cond{flex:1;text-align:center}
+.cond b{display:block;font:400 clamp(36px,5vw,56px)/1.02 Anton,Impact,sans-serif;text-transform:uppercase;text-wrap:balance}
 .hilo{color:var(--mute);font-size:17px;margin:8px 0 0}
 .when{font:600 15px 'JetBrains Mono',monospace;color:var(--mute);margin-top:6px}
 .scene{position:relative;height:clamp(380px,60vh,560px);border-radius:24px;overflow:hidden;margin-top:14px;cursor:pointer;background:#9fc4e8;isolation:isolate;-webkit-tap-highlight-color:transparent}
@@ -113,7 +116,7 @@ header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:s
 .lamps{position:absolute;inset:0;pointer-events:none}
 .lamps i{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,160,1) 0,rgba(255,190,100,.55) 18%,rgba(255,170,80,0) 68%);opacity:0;transition:opacity .8s}
 .lamps.on i{opacity:1}
-@media(max-width:600px){.scene{height:auto;aspect-ratio:1/1.02;margin-top:12px;border-radius:20px}.cond b{font-size:26px}.temp{font-size:clamp(88px,26vw,120px)}}
+@media(max-width:600px){.scene{height:auto;aspect-ratio:1/1.02;margin-top:12px;border-radius:20px}.cond b{font-size:clamp(30px,9.5vw,40px)}.temp{font-size:clamp(88px,26vw,120px)}}
 .bubble{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);background:var(--ink);color:var(--bg);font-weight:800;padding:8px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}
 .bubble.on{opacity:1;transform:translate(-50%,-90%) scale(1)}
 .alerts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
@@ -225,13 +228,12 @@ footer a{color:inherit}
 </div>
 <div class="wrap">
   <header>
-    <button class="place" id="placeBtn" aria-expanded="false" aria-controls="panel"><span id="placeName">Bilbao</span>
+    <div class="hname"><button class="place" id="placeBtn" aria-expanded="false" aria-controls="panel"><span id="placeName">Bilbao</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
-    <button class="btn addhere" id="addHere" hidden>＋ Añadir</button>
-    <button class="btn locbtn" id="listBtn" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="3.5" cy="6" r="1.3" fill="currentColor"/><circle cx="3.5" cy="12" r="1.3" fill="currentColor"/><circle cx="3.5" cy="18" r="1.3" fill="currentColor"/></svg>Mis lugares</button>
-    <button class="btn locbtn2" id="locBtn" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Mi ubicación</button>
+    <button class="btn addhere" id="addHere" hidden>＋ Añadir</button></div>
+    <div class="hbtns"><button class="btn locbtn2" id="locBtn" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Mi ubicación</button>
+    <button class="btn locbtn" id="listBtn" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="3.5" cy="6" r="1.3" fill="currentColor"/><circle cx="3.5" cy="12" r="1.3" fill="currentColor"/><circle cx="3.5" cy="18" r="1.3" fill="currentColor"/></svg>Mis lugares</button></div>
     <p class="locmsg" id="locMsg" role="status"></p>
-
   </header>
 
   <div class="panel" id="panel" hidden>
@@ -304,7 +306,7 @@ footer a{color:inherit}
 <script>
 {
 /* ---------- actualización automática: si hay versión nueva en GitHub, recarga sin caché ---------- */
-const APP_V='2026-11-27c';
+const APP_V='2026-11-27d';
 async function checkUpdate(){try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();
   if(j.v&&j.v!==APP_V){const k='w.upd.'+j.v;if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');location.replace(location.pathname+'?v='+encodeURIComponent(j.v)+location.hash)}}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate()});
