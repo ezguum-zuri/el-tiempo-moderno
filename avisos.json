@@ -1,55 +1,7 @@
 {
 "source": "AEMET vía MeteoAlarm",
-"updated": "2026-11-28T05:55:34+00:00",
+"updated": "2026-11-28T09:32:17+00:00",
 "warnings": [
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Valle del Tajo",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Valle del Guadiana",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "La Siberia extremeña",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Vegas del Guadiana",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Tajo y Alagón",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
-{
-"level": 2,
-"title": "Aviso de nieblas de nivel amarillo",
-"zone": "Barros y Serena",
-"desc": "Visibilidad: 200 m.",
-"onset": "2026-11-28T00:00:00+01:00",
-"expires": "2026-11-28T09:59:59+01:00"
-},
 {
 "level": 2,
 "title": "Aviso de lluvias de nivel amarillo",
